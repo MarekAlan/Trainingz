@@ -75,6 +75,8 @@ class TrainingWeek(models.Model):
     training_days = models.ManyToManyField(TrainingDay)
 
 
+
+
 class Comment(models.Model):
 
     training_day = models.ForeignKey(TrainingDay, on_delete=models.CASCADE)
