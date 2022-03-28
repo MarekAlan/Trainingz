@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block trainingz %}
+    <p></p>
+
+    <div style="border: solid; border-width: 1px;">
+
+        <h3>{{ workout_block.name }}</h3>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Duration: {{ workout_block.duration }} min</p>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Workout Details:</p>
+        <p>{{ workout_block.workout_details }}</p>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Description:</p>
+        <p>{{ workout_block.description }}</p>
+    </div>
+
+    <a href="{{ workout_block.get_update_url }}">
+        <button>Edit</button>
+    </a>
+    <a href="{{ workout_block.get_delete_url }}">
+        <button>Delete</button>
+    </a>
+
+    </p>
+{% endblock %}
