@@ -21,4 +21,10 @@ from trainingz_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='index'),
+    path('add_workout_block/', views.AddWorkoutBlockView.as_view(), name='add_workout_block'),
+    path('list_workout_blocks/', views.ShowWorkoutBlocksView.as_view(), name='list_workout_blocks'),
+    path('workout_block/<int:id>/', views.ShowDetailWorkoutBlockView.as_view(), name='detail_workout_block'),
+    path('update_workout_block/<int:id>/', views.UpdateWorkoutBlockView.as_view(), name='update_workout_block'),
+    path('delete_workout_block/<int:id>/', views.DeleteWorkoutBlockView.as_view(), name='delete_workout_block'),
+
 ]
