@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block trainingz %}
+    <p></p>
+
+    <div style="border: solid; border-width: 1px;">
+
+        <h3>{{ training_day.day_name.name }}</h3>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Activity: {{ training_day.activity }}</p>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Duration: {{ training_day.duration }} min</p>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Workout Blocks:</p>
+        <p>{{ training_day.workout_element }}</p>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+     <p>Description:</p>
+    <p>{{ workout_blocks.id }}</p>
+    </div>
+
+    <a href="{{ training_day.get_update_url }}">
+        <button>Edit</button>
+    </a>
+    <a href="{{ training_day.get_delete_url }}">
+        <button>Delete</button>
+    </a>
+
+    </p>
+{% endblock %}

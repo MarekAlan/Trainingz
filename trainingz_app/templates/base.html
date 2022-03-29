@@ -10,24 +10,24 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 </head>
 <body>
-<p>Welcome to Trainingz.</p>
+<p>Welcome: {{ user }} have a great workout today.</p>
+</body>
+</html>
 
 <div class="topnav">
     <a href="{% url 'index' %}">Index</a>
     <a href="{% url 'add_workout_block' %}">Add Workout Block</a>
     <a href="{% url 'list_workout_blocks' %}">Workout Blocks</a>
-
-
-
+    <a href="{% url 'add_training_day' %}">Add Training Day</a>
+    <a href="{% url 'list_training_days' %}">Training Days</a>
+    <a href="{% url 'add_training_week' %}">Add Training Week</a>
+    <a href="{% url 'list_training_weeks' %}">Training Weeks</a>
 
 </div>
 {% block trainingz %}
 
-Strona główna
 
 {% endblock %}
 
 <p> <img src="{% static 'cycling.jpeg' %}"> </p>
-<p>{{ user }}  {{ date }} </p>   <!-- w settings.py jest context_processor który trzyma user'a - więc można go wywołać-->
-</body>
-</html>
+<p>{{ date }}</p>

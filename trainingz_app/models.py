@@ -70,14 +70,24 @@ WORKOUT_ELEMENTS = (
 
 
 class TrainingDay(models.Model):
+    day_name = models.ForeignKey(DayName, on_delete=models.CASCADE)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     workout_element = models.CharField(max_length=30, choices=WORKOUT_ELEMENTS)
-    workout_block = models.ManyToManyField(WorkoutBlock)
-    day_name = models.ForeignKey(DayName, on_delete=models.CASCADE)
-    duration = models.TimeField()
+    workout_blocks = models.ManyToManyField(WorkoutBlock)
+
 
     def __str__(self):
-        return self.workout_element
+        return self.day_name.name
+
+    def get_absolute_url(self):
+        return reverse("detail_training_day",
+                       args=(self.id,))
+
+    def get_update_url(self):
+        return reverse("update_training_day", kwargs={'id': self.id})
+
+    def get_delete_url(self):
+        return reverse("delete_training_day", kwargs={'id': self.id})
 
 
 class TrainingWeek(models.Model):
@@ -87,6 +97,16 @@ class TrainingWeek(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("detail_training_week",
+                       args=(self.id,))
+
+    def get_update_url(self):
+        return reverse("update_training_week", kwargs={'id': self.id})
+
+    def get_delete_url(self):
+        return reverse("delete_training_week", kwargs={'id': self.id})
 
 
 class Comment(models.Model):
