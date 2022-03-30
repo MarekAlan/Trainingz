@@ -75,7 +75,6 @@ class TrainingDay(models.Model):
     workout_blocks = models.ManyToManyField(WorkoutBlock)
 
 
-
     def __str__(self):
         return self.day_name.name
 
