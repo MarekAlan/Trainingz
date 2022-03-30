@@ -2,7 +2,8 @@ from django.forms import forms
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from trainingz_app.forms import AddWorkoutBlockForm, AddTrainingDayForm, AddTrainingWeekForm
+from trainingz_app.forms import AddWorkoutBlockForm, AddTrainingDayForm, AddTrainingWeekForm, AddCommentForm, \
+    AddWorkoutBlockToTrainingDayForm
 from trainingz_app.models import WorkoutBlock, TrainingDay, TrainingWeek
 
 
@@ -90,8 +91,23 @@ class ShowDetailTrainingDayView(View):
 
     def get(self, request, id):
         training_day = TrainingDay.objects.get(pk=id)
-        workout_blocks = training_day.workout_blocks.all()
-        return render(request, 'training_day_detail.html', {'training_day': training_day, 'workout_blocks': workout_blocks})
+        form = AddWorkoutBlockToTrainingDayForm()
+        ctx = {
+            'training_day': training_day,
+            'form': form
+        }
+        return render(request, 'training_day_detail.html', ctx)
+
+    def post(self, request, id):
+        training_day_id = TrainingDay.objects.get(pk=id)
+        form = AddWorkoutBlockToTrainingDayForm(request.POST)
+        if form.is_valid():
+            training_day = form.save(commit=False)
+            training_day.day_name = training_day_id.day_name
+            training_day.activity = training_day_id.activity
+            training_day.save()
+            return redirect(f'/trainingz_app/training_day/{training_day.id}')
+        return render(request, 'form.html', {'form': form})
 
 
 class UpdateTrainingDayView(View):
@@ -106,7 +122,7 @@ class UpdateTrainingDayView(View):
         form = AddTrainingDayForm(request.POST, instance=training_day)
         if form.is_valid():
             form.save()
-            return redirect('detail_training_day')
+            return redirect(f'/trainingz_app/training_day/{training_day.id}')
         return render(request, 'form.html', {'form': form})
 
 
@@ -176,3 +192,19 @@ class DeleteTrainingWeek(View):
         training_week = TrainingWeek.objects.get(pk=id)
         training_week.delete()
         return redirect('list_training_weeks')
+
+
+class AddCommentView(View):
+
+    def get(self, request):
+        form = AddCommentForm()
+        return render(request, 'form.html')
+
+    def post(self, request):
+        form = AddCommentForm(request.POST, instance=TrainingDay)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.save()
+            return redirect('detail_training_day')
+        return render(request, 'form.html', {'form': form})

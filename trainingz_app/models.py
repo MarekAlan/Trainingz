@@ -42,11 +42,17 @@ class DayName(models.Model):
         return self.name
 
 
+WORKOUT_ELEMENTS = (
+    ('Warm Up', 'Warm Up'),
+    ('Active', 'Active'),
+    ('Cool Down', 'Cool Down')
+)
+
 class WorkoutBlock(models.Model):
     name = models.CharField(max_length=50)
+    workout_element = models.CharField(max_length=30, choices=WORKOUT_ELEMENTS)
     workout_details = models.TextField()
     duration = models.SmallIntegerField()
-    description = models.TextField()
 
     def __str__(self):
         return self.name
@@ -62,18 +68,12 @@ class WorkoutBlock(models.Model):
         return reverse("delete_workout_block", kwargs={'id': self.id})
 
 
-WORKOUT_ELEMENTS = (
-    ('Warm Up', 'Warm Up'),
-    ('Active', 'Active'),
-    ('Cool Down', 'Cool Down')
-)
-
-
 class TrainingDay(models.Model):
     day_name = models.ForeignKey(DayName, on_delete=models.CASCADE)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
-    workout_element = models.CharField(max_length=30, choices=WORKOUT_ELEMENTS)
+    description = models.TextField()
     workout_blocks = models.ManyToManyField(WorkoutBlock)
+
 
 
     def __str__(self):
@@ -92,8 +92,9 @@ class TrainingDay(models.Model):
 
 class TrainingWeek(models.Model):
     name = models.CharField(max_length=40)
-    description = models.TextField()
     training_days = models.ManyToManyField(TrainingDay)
+    description = models.TextField()
+
 
     def __str__(self):
         return self.name
