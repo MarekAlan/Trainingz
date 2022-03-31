@@ -18,7 +18,7 @@ class AddTrainingDayForm(forms.ModelForm):
 class AddWorkoutBlockToTrainingDayForm(forms.ModelForm):
     class Meta:
         model = TrainingDay
-        exclude = ['day_name', 'activity']
+        fields = ['workout_blocks']
 
 
 class AddTrainingWeekForm(forms.ModelForm):

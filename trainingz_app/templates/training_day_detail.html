@@ -20,13 +20,13 @@
         <p>Workout Blocks:</p>
 <div style="border: solid; border-width: 1px;">
         {% for workout_block in training_day.workout_blocks.all %}
-    {{ workout_block.name }} {{ workout_block.workout_details }}
+            <div>Workout Block: {{ workout_block.name }}  To do: {{ workout_block.workout_details }} </div>
 
         {% endfor %}
 
     <div style="border: solid; border-width: 1px;">
         <p>Description: </p>
-        {{ training_day.duration }}
+        {{ training_day.description }}
     </div>
 
     <a href="{{ training_day.get_update_url }}">

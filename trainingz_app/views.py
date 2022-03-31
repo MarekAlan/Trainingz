@@ -99,15 +99,11 @@ class ShowDetailTrainingDayView(View):
         return render(request, 'training_day_detail.html', ctx)
 
     def post(self, request, id):
-        training_day_id = TrainingDay.objects.get(pk=id)
+        training_day = TrainingDay.objects.get(pk=id)
         form = AddWorkoutBlockToTrainingDayForm(request.POST)
-        if form.is_valid():
-            training_day = form.save(commit=False)
-            training_day.day_name = training_day_id.day_name
-            training_day.activity = training_day_id.activity
-            training_day.save()
-            return redirect(f'/trainingz_app/training_day/{training_day.id}')
-        return render(request, 'form.html', {'form': form})
+        workout_block = request.POST['workout_blocks']
+        training_day.workout_blocks.add(workout_block)
+        return redirect(f'/trainingz_app/training_day/{training_day.id}')
 
 
 class UpdateTrainingDayView(View):
@@ -178,7 +174,7 @@ class UpdateTrainingWeekView(View):
         form = AddTrainingWeekForm(request.POST, instance=training_week)
         if form.is_valid():
             form.save()
-            return redirect('detail_training_week')
+            return redirect(f'/trainingz_app/training_week/{training_week.id}')
         return render(request, 'form.html', {'form': form})
 
 
