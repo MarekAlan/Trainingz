@@ -5,10 +5,12 @@ from django.core.exceptions import ValidationError
 
 class LoginForm(forms.Form):
 
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Login'}),
-                               label='')
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
-                               label='')
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={"placeholder": "Login"}), label=""
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"}), label=""
+    )
 
 
 class CreateUserForm(forms.ModelForm):
@@ -18,17 +20,15 @@ class CreateUserForm(forms.ModelForm):
 
     def clean(self):
         data = super().clean()
-        if data['pass1'] != data['pass2']:
+        if data["pass1"] != data["pass2"]:
             raise ValidationError("Passwords don't match")
 
     class Meta:
         model = User
-        fields = ['username']
+        fields = ["username"]
 
 
 class UserPermUpdateForm(forms.ModelForm):
     model = User
-    fields = ['user_permissions']
-    widgets = {
-        'user_permissions': forms.CheckboxSelectMultiple
-    }
+    fields = ["user_permissions"]
+    widgets = {"user_permissions": forms.CheckboxSelectMultiple}

@@ -19,8 +19,8 @@ from django.urls import path, include
 from trainingz_app import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.IndexView.as_view(), name='index'),
-    path('trainingz_app/', include('trainingz_app.urls')),
-    path('accounts/', include('accounts.urls')),
+    path("admin/", admin.site.urls),
+    path("", views.IndexView.as_view(), name="index"),
+    path("trainingz_app/", include("trainingz_app.urls")),
+    path("accounts/", include("accounts.urls")),
 ]

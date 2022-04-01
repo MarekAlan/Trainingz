@@ -10,8 +10,8 @@
 
         <p>Trainings:</p>
 <div style="border: solid; border-width: 1px;">
-        {% for training_day in training_week.training_days.all %}
-            <div>{{ training_day.day_name }}  - {{ training_day.activity }}:  {{ training_day.description }} </div>
+        {% for training in training_week.trainings.all %}
+            <div>{{ training.name }}  - {{ training.activity }}:  {{ training.description }} </div>
 
         {% endfor %}
 

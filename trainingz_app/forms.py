@@ -1,34 +1,44 @@
 from django import forms
+from django.forms import CheckboxSelectMultiple, DateInput
 
-from trainingz_app.models import WorkoutBlock, TrainingDay, TrainingWeek, Comment
+from trainingz_app.models import WorkoutBlock, Training, TrainingWeek, Comment
 
 
 class AddWorkoutBlockForm(forms.ModelForm):
     class Meta:
         model = WorkoutBlock
-        fields = '__all__'
+        fields = "__all__"
 
 
-class AddTrainingDayForm(forms.ModelForm):
+class AddTrainingForm(forms.ModelForm):
     class Meta:
-        model = TrainingDay
-        exclude = ['duration']
+        model = Training
+        exclude = ["duration"]
+        widgets = {
+            'workout_blocks': CheckboxSelectMultiple,
+            'date': DateInput(attrs={'type': 'date'})
+        }
 
 
-class AddWorkoutBlockToTrainingDayForm(forms.ModelForm):
+class AddWorkoutBlockToTrainingForm(forms.ModelForm):
     class Meta:
-        model = TrainingDay
-        fields = ['workout_blocks']
+        model = Training
+        fields = ["workout_blocks"]
+        widgets = {
+            'workout_blocks': CheckboxSelectMultiple
+        }
 
 
 class AddTrainingWeekForm(forms.ModelForm):
     class Meta:
         model = TrainingWeek
-        fields = '__all__'
+        fields = "__all__"
+        widgets = {
+            'training_days': CheckboxSelectMultiple
+        }
 
 
 class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['author']
-
+        exclude = ["author"]

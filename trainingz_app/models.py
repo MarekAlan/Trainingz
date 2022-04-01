@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -5,18 +7,17 @@ from django.db import models
 from django.urls import reverse
 
 CHOICES = (
-    ('Bike', 'Road Bike'),
-    ('MTB', 'MTB'),
-    ('Run', 'Running'),
-    ('Stretching', 'Stretching'),
-    ('Crosstrain', 'Cross-Training'),
-    ('Rest Day', 'Rest Day'),
-    ('Event', 'Event'),
+    ("Bike", "Road Bike"),
+    ("MTB", "MTB"),
+    ("Run", "Running"),
+    ("Stretching", "Stretching"),
+    ("Crosstrain", "Cross-Training"),
+    ("Rest Day", "Rest Day"),
+    ("Event", "Event"),
 )
 
 
 class Activity(models.Model):
-
     def __str__(self):
         return self.name
 
@@ -24,13 +25,13 @@ class Activity(models.Model):
 
 
 DAYS = (
-    ('Mon', 'Monday'),
-    ('Tue', 'Tuesday'),
-    ('Wed', 'Wednesday'),
-    ('Thu', 'Thursday'),
-    ('Fri', 'Friday'),
-    ('Sat', 'Saturday'),
-    ('Sun', 'Sunday')
+    ("Mon", "Monday"),
+    ("Tue", "Tuesday"),
+    ("Wed", "Wednesday"),
+    ("Thu", "Thursday"),
+    ("Fri", "Friday"),
+    ("Sat", "Saturday"),
+    ("Sun", "Sunday"),
 )
 
 
@@ -43,10 +44,11 @@ class DayName(models.Model):
 
 
 WORKOUT_ELEMENTS = (
-    ('Warm Up', 'Warm Up'),
-    ('Active', 'Active'),
-    ('Cool Down', 'Cool Down')
+    ("Warm Up", "Warm Up"),
+    ("Active", "Active"),
+    ("Cool Down", "Cool Down"),
 )
+
 
 class WorkoutBlock(models.Model):
     name = models.CharField(max_length=50)
@@ -58,58 +60,59 @@ class WorkoutBlock(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("detail_workout_block",
-                       args=(self.id,))
+        return reverse("detail_workout_block", args=(self.id,))
 
     def get_update_url(self):
-        return reverse("update_workout_block", kwargs={'id': self.id})
+        return reverse("update_workout_block", kwargs={"id": self.id})
 
     def get_delete_url(self):
-        return reverse("delete_workout_block", kwargs={'id': self.id})
+        return reverse("delete_workout_block", kwargs={"id": self.id})
 
 
-class TrainingDay(models.Model):
-    day_name = models.ForeignKey(DayName, on_delete=models.CASCADE)
+class Training(models.Model):
+    name = models.CharField(max_length=50)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     description = models.TextField()
     workout_blocks = models.ManyToManyField(WorkoutBlock)
-
-
-    def __str__(self):
-        return self.day_name.name
-
-    def get_absolute_url(self):
-        return reverse("detail_training_day",
-                       args=(self.id,))
-
-    def get_update_url(self):
-        return reverse("update_training_day", kwargs={'id': self.id})
-
-    def get_delete_url(self):
-        return reverse("delete_training_day", kwargs={'id': self.id})
-
-
-class TrainingWeek(models.Model):
-    name = models.CharField(max_length=40)
-    training_days = models.ManyToManyField(TrainingDay)
-    description = models.TextField()
-
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("detail_training_week",
-                       args=(self.id,))
+        return reverse("detail_training", args=(self.id,))
 
     def get_update_url(self):
-        return reverse("update_training_week", kwargs={'id': self.id})
+        return reverse("update_training", kwargs={"id": self.id})
 
     def get_delete_url(self):
-        return reverse("delete_training_week", kwargs={'id': self.id})
+        return reverse("delete_training", kwargs={"id": self.id})
+
+
+class TrainingDay(models.Model):
+    date = models.DateField()
+    training = models.ForeignKey(Training, on_delete=models.CASCADE)
+    description = models.TextField()
+
+
+class TrainingWeek(models.Model):
+    name = models.CharField(max_length=40)
+    trainings = models.ManyToManyField(TrainingDay)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("detail_training_week", args=(self.id,))
+
+    def get_update_url(self):
+        return reverse("update_training_week", kwargs={"id": self.id})
+
+    def get_delete_url(self):
+        return reverse("delete_training_week", kwargs={"id": self.id})
 
 
 class Comment(models.Model):
-    training_day = models.ForeignKey(TrainingDay, on_delete=models.CASCADE)
+    training = models.ForeignKey(Training, on_delete=models.CASCADE)
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
