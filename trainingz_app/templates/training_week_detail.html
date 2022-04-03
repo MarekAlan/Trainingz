@@ -10,8 +10,8 @@
 
         <p>Trainings:</p>
 <div style="border: solid; border-width: 1px;">
-        {% for training in training_week.trainings.all %}
-            <div>{{ training.name }}  - {{ training.activity }}:  {{ training.description }} </div>
+        {% for training_day in trainings %}
+            <div>{{ training_day.training.date }}: {{ training_day.training.name }}  - {{ training_day.training.activity }}:  {{ training_day.training.description }} </div>
 
         {% endfor %}
 
@@ -26,7 +26,7 @@
     </p>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form_training.as_p }}
         <input type="submit">
     </form>
 {% endblock %}

@@ -89,13 +89,25 @@ class Training(models.Model):
 
 
 class TrainingDay(models.Model):
-    date = models.DateField()
     training = models.ForeignKey(Training, on_delete=models.CASCADE)
-    description = models.TextField()
+    date = models.DateField()
 
+    def __str__(self):
+        return self.date
+
+    def get_absolute_url(self):
+        return reverse("detail_trainingday", args=(self.id,))
+
+    def get_update_url(self):
+        return reverse("update_trainingday", kwargs={"id": self.id})
+
+    def get_delete_url(self):
+        return reverse("delete_trainingday", kwargs={"id": self.id})
 
 class TrainingWeek(models.Model):
     name = models.CharField(max_length=40)
+    start_date = models.DateField()
+    end_date = models.DateField()
     trainings = models.ManyToManyField(TrainingDay)
     description = models.TextField()
 

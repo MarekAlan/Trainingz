@@ -7,7 +7,7 @@ from trainingz_app.forms import (
     AddTrainingForm,
     AddTrainingWeekForm,
     AddCommentForm,
-    AddWorkoutBlockToTrainingForm,
+    AddWorkoutBlockToTrainingForm, AddTrainingDayForm,
 )
 from trainingz_app.models import WorkoutBlock, Training, TrainingWeek
 
@@ -147,26 +147,43 @@ class DeleteTraining(View):
 
 class AddTrainingWeekView(View):
     def get(self, request):
-        form = AddTrainingWeekForm()
-        return render(request, "form.html", {"form": form})
+        form_week = AddTrainingWeekForm()
+        form_training = AddTrainingDayForm()
+        return render(request, "form_training_week.html", {"form_week": form_week, 'form_training': form_training})
 
     def post(self, request):
-        form = AddTrainingWeekForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form_week = AddTrainingWeekForm(request.POST)
+        form_training = AddTrainingDayForm(request.POST)
+        if form_week.is_valid() and form_training.is_valid():
+            form_week.save()
+            form_training.save()
             return redirect("list_training_weeks")
-        return render(request, "form.html", {"form": form})
+        return render(request, "form_training_week.html", {"form_week": form_week, 'form_training': form_training})
+
 
 
 class ShowTrainingWeeksView(View):
     def get(self, request):
-        return render(request, "list_workout_blocks.html", {"object_list": TrainingWeek.objects.all()})
+        return render(request, "list_training_weeks.html", {"object_list": TrainingWeek.objects.all()})
 
 
 class ShowDetailTrainingWeekView(View):
     def get(self, request, id):
         training_week = TrainingWeek.objects.get(pk=id)
-        trainings = training_week.training_days.all()
+        trainings = training_week.trainings.all()
+        form_training = AddTrainingDayForm()
+        return render(
+            request,
+            "training_week_detail.html",
+            {"training_week": training_week, "trainings": trainings, 'form_training': form_training},
+        )
+
+    def post(self, request, id):
+        training_week = TrainingWeek.objects.get(pk=id)
+        trainings = training_week.trainings.all()
+        form_training = AddTrainingDayForm(request.POST)
+        if form_training.is_valid():
+            form_training.save()
         return render(
             request,
             "training_week_detail.html",

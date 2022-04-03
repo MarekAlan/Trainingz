@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block trainingz %}
+
+<ul>
+    {% for item in object_list %}
+        <li>
+            <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+            <a href="{{ item.get_update_url }}"><button>Edit</button></a>
+            <a href="{{ item.get_delete_url }}"><button>Delete</button></a>
+        </li>
+    {% endfor %}
+ <form method="POST">
+        {% csrf_token %}
+     <p>Add Training:</p>
+        {{ form.as_p }}
+        <input type="submit" value="Add Training">
+</ul>
+{% endblock %}
