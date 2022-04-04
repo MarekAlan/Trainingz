@@ -11,8 +11,8 @@
     {% endfor %}
  <form method="POST">
         {% csrf_token %}
-     <p>Add Training:</p>
-        {{ form.as_p }}
-        <input type="submit" value="Add Training">
+     <p>Add Training Week:</p>
+        {{ form_week.as_p }}
+        <input type="submit" value="Add Training Week">
 </ul>
 {% endblock %}

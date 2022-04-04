@@ -161,7 +161,14 @@ class AddTrainingWeekView(View):
 
 class ShowTrainingWeeksView(View):
     def get(self, request):
-        return render(request, "list_training_weeks.html", {"object_list": TrainingWeek.objects.all()})
+        form_week = AddTrainingWeekForm()
+        return render(request, "list_training_weeks.html", {"object_list": TrainingWeek.objects.all(), "form_week": form_week})
+
+    def post(self, request):
+        form_week = AddTrainingWeekForm(request.POST)
+        if form_week.is_valid():
+            form_week.save()
+        return render(request, "list_training_weeks.html", {"object_list": TrainingWeek.objects.all(), "form_week": form_week})
 
 
 class ShowDetailTrainingWeekView(View):
