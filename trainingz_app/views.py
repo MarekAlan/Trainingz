@@ -9,7 +9,7 @@ from trainingz_app.forms import (
     AddCommentForm,
     AddWorkoutBlockToTrainingForm, AddTrainingDayForm,
 )
-from trainingz_app.models import WorkoutBlock, Training, TrainingWeek, TrainingDay
+from trainingz_app.models import WorkoutBlock, Training, TrainingWeek, TrainingDay, Comment
 
 
 class IndexView(View):
@@ -224,22 +224,32 @@ class ShowDetailTrainingDayView(View):
         training_id = TrainingDay.objects.get(pk=id).training_id
         training = Training.objects.get(pk=training_id)
         workout_blocks = training.workout_blocks.all()
+        comments = training_day.comment_set.all()
+        form = AddCommentForm()
         training_duration = 0
         for workout_block in workout_blocks:
             training_duration += workout_block.duration
-        ctx = {"training": training, "training_duration": training_duration, 'training_day': training_day}
+        ctx = {'comments': comments, "form": form, "training": training, "training_duration": training_duration, 'training_day': training_day}
         return render(request, "training_day_detail.html", ctx)
 
     def post(self, request, id):
-        pass
-    #
-    # def post(self, request, id):
-    #     training = Training.objects.get(pk=id)
-    #     form = AddWorkoutBlockToTrainingForm(request.POST)
-    #     workout_block = request.POST["workout_blocks"]
-    #     training.workout_blocks.add(workout_block)
-    #     return redirect(f"/trainingz_app/training/{training.id}")
-
+        training_day = TrainingDay.objects.get(pk=id)
+        training_id = TrainingDay.objects.get(pk=id).training_id
+        training = Training.objects.get(pk=training_id)
+        workout_blocks = training.workout_blocks.all()
+        comments = training_day.comment_set.all()
+        training_duration = 0
+        for workout_block in workout_blocks:
+            training_duration += workout_block.duration
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.training_day = training_day
+            comment.save()
+        ctx = {'comments': comments, "form": form, "training": training, "training_duration": training_duration,
+               'training_day': training_day}
+        return render(request, "training_day_detail.html", ctx)
 
 class DeleteTrainingDay(View):
     def get(self, request, id):
@@ -251,19 +261,3 @@ class DeleteTrainingDay(View):
         training_day.delete()
         return redirect("list_training_weeks")
 
-
-
-
-class AddCommentView(View):
-    def get(self, request):
-        form = AddCommentForm()
-        return render(request, "form.html")
-
-    def post(self, request):
-        form = AddCommentForm(request.POST, instance=Training)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.save()
-            return redirect("detail_training")
-        return render(request, "form.html", {"form": form})

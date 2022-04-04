@@ -125,6 +125,6 @@ class TrainingWeek(models.Model):
 
 
 class Comment(models.Model):
-    training = models.ForeignKey(Training, on_delete=models.CASCADE)
+    training_day = models.ForeignKey(TrainingDay, on_delete=models.CASCADE, null=True)
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

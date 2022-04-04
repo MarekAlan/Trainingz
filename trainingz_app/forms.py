@@ -51,7 +51,6 @@ class AddTrainingDayForm(forms.ModelForm):
 class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ["author"]
-
+        fields = ['text']
 
 

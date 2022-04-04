@@ -86,5 +86,5 @@ urlpatterns = [
             views.DeleteTrainingDay.as_view(),
             name="delete_training_day",
     ),
-    path("add_comment/", views.AddCommentView.as_view(), name="add_comment"),
+
 ]

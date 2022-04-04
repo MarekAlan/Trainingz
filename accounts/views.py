@@ -8,6 +8,11 @@ from django.views.generic import ListView
 from accounts.forms import LoginForm, CreateUserForm, UserPermUpdateForm
 
 
+class IndexView(View):
+    def get(self, request):
+        return render(request, 'base.html')
+
+
 class LoginView(View):
     def get(self, request):
         form = LoginForm()
@@ -18,10 +23,10 @@ class LoginView(View):
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
-            user = authenticate(usernmae=username, password=password)
+            user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("index")
+                return redirect("login")
         return render(request, "form.html", {"form": form})
 
 
@@ -34,7 +39,7 @@ class RegisterView(View):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_paswwor(form.cleaned_data["pass1"])
+            user.set_password(form.cleaned_data["pass1"])
             user.save()
             return redirect("login")
         return render(request, "form.html", {"form": form})

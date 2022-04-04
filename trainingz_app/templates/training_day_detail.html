@@ -25,4 +25,23 @@
         {{ training.description }}
     </div>
 
+<div style="border: solid; border-width: 1px;">
+        <p>Comments: </p>
+     {% for comment in comments %}
+
+         <p>{{ comment.author }}</p>
+       <p> {{ comment.text }}</p>
+
+    {% endfor %}
+
+
+    </div>
+
+
+<form method="POST">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Add Comment">
+</form>
+
 {% endblock %}
