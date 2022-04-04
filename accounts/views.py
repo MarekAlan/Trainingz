@@ -9,11 +9,17 @@ from accounts.forms import LoginForm, CreateUserForm, UserPermUpdateForm
 
 
 class IndexView(View):
+    """
+    Returns homepage.
+    """
     def get(self, request):
         return render(request, 'base.html')
 
 
 class LoginView(View):
+    """
+    Allows user to login
+    """
     def get(self, request):
         form = LoginForm()
         return render(request, "form.html", {"form": form})
@@ -31,6 +37,9 @@ class LoginView(View):
 
 
 class RegisterView(View):
+    """
+    Allows user to register
+    """
     def get(self, request):
         form = CreateUserForm()
         return render(request, "form.html", {"form": form})
@@ -46,18 +55,26 @@ class RegisterView(View):
 
 
 class LogoutView(View):
+    """
+    Allows user to logout
+    """
     def get(self, request):
         logout(request)
         return redirect("index")
 
 
 class UserListView(ListView):
-
+    """
+    Shows the list of user
+    """
     model = User
     template_name = "accounts/user_list_view.html"
 
 
 class UserPermSettingView(UserPassesTestMixin, View):
+    """
+    Setting of user permissions
+    """
     def test_func(self):
         return self.request.user.is_superuser
 

@@ -12,12 +12,10 @@ from trainingz_app.forms import (
 from trainingz_app.models import WorkoutBlock, Training, TrainingWeek, TrainingDay, Comment
 
 
-class IndexView(View):
-    def get(self, request):
-        return render(request, "base.html")
-
-
 class AddWorkoutBlockView(View):
+    """
+    Add a single workout block
+    """
     def get(self, request):
         form = AddWorkoutBlockForm()
         return render(request, "form.html", {"form": form})
@@ -31,6 +29,9 @@ class AddWorkoutBlockView(View):
 
 
 class ShowWorkoutBlocksView(View):
+    """
+    List of workout blocks added.
+    """
     def get(self, request):
         form = AddWorkoutBlockForm()
         return render(request, "list_workout_blocks.html", {"object_list": WorkoutBlock.objects.all(), 'form': form})
@@ -42,6 +43,9 @@ class ShowWorkoutBlocksView(View):
         return redirect("list_workout_blocks")
 
 class ShowDetailWorkoutBlockView(View):
+    """
+    Show detailas of a workout block
+    """
     def get(self, request, id):
         workout_block = WorkoutBlock.objects.get(pk=id)
         return render(
@@ -50,6 +54,9 @@ class ShowDetailWorkoutBlockView(View):
 
 
 class UpdateWorkoutBlockView(View):
+    """
+    Uptades a workout block
+    """
     def get(self, request, id):
         workout_block = WorkoutBlock.objects.get(pk=id)
         form = AddWorkoutBlockForm(instance=workout_block)
@@ -65,6 +72,9 @@ class UpdateWorkoutBlockView(View):
 
 
 class DeleteWorkoutBlockView(View):
+    """
+    Deletes a workout block
+    """
     def get(self, request, id):
         workout_block = WorkoutBlock.objects.get(pk=id)
         return render(request, "form.html", {})
@@ -76,6 +86,9 @@ class DeleteWorkoutBlockView(View):
 
 
 class AddTrainingView(View):
+    """
+    Adds a single training made of many workout blocks
+    """
     def get(self, request):
         form = AddTrainingForm()
         return render(request, "form.html", {"form": form})
@@ -89,6 +102,9 @@ class AddTrainingView(View):
 
 
 class ShowTrainingsView(View):
+    """
+    Lists of all trainings
+    """
     def get(self, request):
         form = AddTrainingForm()
         return render(request, "list_trainings.html", {"object_list": Training.objects.all(), 'form': form})
@@ -101,6 +117,9 @@ class ShowTrainingsView(View):
 
 
 class ShowDetailTrainingView(View):
+    """
+    Details of an single workout
+    """
     def get(self, request, id):
         training = Training.objects.get(pk=id)
         workout_blocks = training.workout_blocks.all()
@@ -120,6 +139,9 @@ class ShowDetailTrainingView(View):
 
 
 class UpdateTrainingView(View):
+    """
+    Updates a single training
+    """
     def get(self, request, id):
         training = Training.objects.get(pk=id)
         form = AddTrainingForm(instance=training)
@@ -135,6 +157,9 @@ class UpdateTrainingView(View):
 
 
 class DeleteTraining(View):
+    """
+    Delets a specific training
+    """
     def get(self, request, id):
         training = Training.objects.get(pk=id)
         return render(request, "form.html")
@@ -146,6 +171,9 @@ class DeleteTraining(View):
 
 
 class AddTrainingWeekView(View):
+    """"
+    Adds a Training Week
+    """
     def get(self, request):
         form_week = AddTrainingWeekForm()
         return render(request, "form_training_week.html", {"form_week": form_week})
@@ -160,6 +188,9 @@ class AddTrainingWeekView(View):
 
 
 class ShowTrainingWeeksView(View):
+    """
+    Shows a list of all training weeeks
+    """
     def get(self, request):
         form_week = AddTrainingWeekForm()
         return render(request, "list_training_weeks.html", {"object_list": TrainingWeek.objects.all(), "form_week": form_week})
@@ -172,6 +203,9 @@ class ShowTrainingWeeksView(View):
 
 
 class ShowDetailTrainingWeekView(View):
+    """
+    Shows details of a specific Training Week. It is also possible to add Training Days to this week
+    """
     def get(self, request, id):
         training_week = TrainingWeek.objects.get(pk=id)
         trainings = training_week.trainings.all().order_by('date')
@@ -200,6 +234,9 @@ class ShowDetailTrainingWeekView(View):
 
 
 class UpdateTrainingWeekView(View):
+    """
+    Updates a specific Training Week
+    """
     def get(self, request, id):
         training_week = TrainingWeek.objects.get(pk=id)
         form = AddTrainingWeekForm(instance=training_week)
@@ -215,6 +252,9 @@ class UpdateTrainingWeekView(View):
 
 
 class DeleteTrainingWeek(View):
+    """
+    Deletes a specific Training Week
+    """
     def get(self, request, id):
         training_week = TrainingWeek.objects.get(pk=id)
         return render(request, "form.html")
@@ -226,6 +266,9 @@ class DeleteTrainingWeek(View):
 
 
 class ShowDetailTrainingDayView(View):
+    """
+    Shows details of a Training Day. Allows to ad comments by logged users
+    """
     def get(self, request, id):
         training_day = TrainingDay.objects.get(pk=id)
         training_id = TrainingDay.objects.get(pk=id).training_id
@@ -259,6 +302,9 @@ class ShowDetailTrainingDayView(View):
         return render(request, "training_day_detail.html", ctx)
 
 class DeleteTrainingDay(View):
+    """
+    Deletes a Training Day
+    """
     def get(self, request, id):
         training_day = TrainingDay.objects.get(pk=id)
         return render(request, "form.html")
