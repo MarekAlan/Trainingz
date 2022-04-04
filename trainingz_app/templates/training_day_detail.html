@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block trainingz %}
+    <p></p>
+
+    <div style="border: solid; border-width: 1px;">
+        <h3>{{ training_day.date }}</h3>
+        <h3>{{ training_day.training }}</h3>
+        <h3>{{ training_day.training.activity }}</h3>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+          <p>Duration: {{ training_duration }} min</p>
+    </div>
+
+    <div style="border: solid; border-width: 1px;">
+       <p>Workout Blocks:</p>
+<div style="border: solid; border-width: 1px;">
+        {% for workout_block in training.workout_blocks.all %}
+            <div>Workout Block: {{ workout_block.name }}  To do: {{ workout_block.workout_details }} </div>
+
+        {% endfor %}
+
+    <div style="border: solid; border-width: 1px;">
+        <p>Description: </p>
+        {{ training.description }}
+    </div>
+
+{% endblock %}

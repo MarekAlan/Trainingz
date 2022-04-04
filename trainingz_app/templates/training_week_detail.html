@@ -8,25 +8,31 @@
     </div>
 
 
-        <p>Trainings:</p>
-<div style="border: solid; border-width: 1px;">
-        {% for training_day in trainings %}
-            <div>{{ training_day.training.date }}: {{ training_day.training.name }}  - {{ training_day.training.activity }}:  {{ training_day.training.description }} </div>
+    <p>Trainings:</p>
+    <div style="border: solid; border-width: 1px;">
+        {% for training in trainings %}
+            <div>{{ training.date }} Planned training: {{ training.training.activity }} - {{ training.training }}
+
+
+                <a href="{{ training.get_absolute_url }}">
+                    <button>Show Training</button>
+                </a>
+                <a href="{{ training.get_delete_url }}">
+                    <button>Delete</button>
+                </a>
+
+
+            </div>
 
         {% endfor %}
+    </div>
 
 
-    <a href="{{ training_week.get_update_url }}">
-        <button>Edit</button>
-    </a>
-    <a href="{{ training_week.get_delete_url }}">
-        <button>Delete</button>
-    </a>
-
-    </p>
+    <div>Add trainings:</div>
     <form method="POST">
         {% csrf_token %}
         {{ form_training.as_p }}
-        <input type="submit">
+        <input type="submit" , value="Add Training">
     </form>
+
 {% endblock %}

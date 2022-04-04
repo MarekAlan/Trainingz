@@ -93,16 +93,16 @@ class TrainingDay(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
     def get_absolute_url(self):
-        return reverse("detail_trainingday", args=(self.id,))
+        return reverse("detail_training_day", args=(self.id,))
 
     def get_update_url(self):
-        return reverse("update_trainingday", kwargs={"id": self.id})
+        return reverse("update_training_day", kwargs={"id": self.id})
 
     def get_delete_url(self):
-        return reverse("delete_trainingday", kwargs={"id": self.id})
+        return reverse("delete_training_day", kwargs={"id": self.id})
 
 class TrainingWeek(models.Model):
     name = models.CharField(max_length=40)
