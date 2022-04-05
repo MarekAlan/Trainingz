@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import forms
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -12,7 +13,15 @@ from trainingz_app.forms import (
 from trainingz_app.models import WorkoutBlock, Training, TrainingWeek, TrainingDay, Comment
 
 
-class AddWorkoutBlockView(View):
+class IndexView(View):
+    """
+    Returns homepage.
+    """
+    def get(self, request):
+        return render(request, 'base.html')
+
+
+class AddWorkoutBlockView(LoginRequiredMixin, View):
     """
     Add a single workout block
     """
@@ -28,7 +37,7 @@ class AddWorkoutBlockView(View):
         return render(request, "form.html", {"form": form})
 
 
-class ShowWorkoutBlocksView(View):
+class ShowWorkoutBlocksView(LoginRequiredMixin, View):
     """
     List of workout blocks added.
     """
@@ -42,7 +51,7 @@ class ShowWorkoutBlocksView(View):
             form.save()
         return redirect("list_workout_blocks")
 
-class ShowDetailWorkoutBlockView(View):
+class ShowDetailWorkoutBlockView(LoginRequiredMixin, View):
     """
     Show detailas of a workout block
     """
@@ -53,7 +62,7 @@ class ShowDetailWorkoutBlockView(View):
         )
 
 
-class UpdateWorkoutBlockView(View):
+class UpdateWorkoutBlockView(LoginRequiredMixin, View):
     """
     Uptades a workout block
     """
@@ -71,7 +80,7 @@ class UpdateWorkoutBlockView(View):
         return render(request, "form.html", {"form": form})
 
 
-class DeleteWorkoutBlockView(View):
+class DeleteWorkoutBlockView(LoginRequiredMixin, View):
     """
     Deletes a workout block
     """
@@ -85,7 +94,7 @@ class DeleteWorkoutBlockView(View):
         return redirect("list_workout_blocks")
 
 
-class AddTrainingView(View):
+class AddTrainingView(LoginRequiredMixin, View):
     """
     Adds a single training made of many workout blocks
     """
@@ -101,7 +110,7 @@ class AddTrainingView(View):
         return render(request, "form.html", {"form": form})
 
 
-class ShowTrainingsView(View):
+class ShowTrainingsView(LoginRequiredMixin, View):
     """
     Lists of all trainings
     """
@@ -116,7 +125,7 @@ class ShowTrainingsView(View):
         return redirect("list_trainings")
 
 
-class ShowDetailTrainingView(View):
+class ShowDetailTrainingView(LoginRequiredMixin, View):
     """
     Details of an single workout
     """
@@ -138,7 +147,7 @@ class ShowDetailTrainingView(View):
         return redirect(f"/trainingz_app/training/{training.id}")
 
 
-class UpdateTrainingView(View):
+class UpdateTrainingView(LoginRequiredMixin, View):
     """
     Updates a single training
     """
@@ -156,7 +165,7 @@ class UpdateTrainingView(View):
         return render(request, "form.html", {"form": form})
 
 
-class DeleteTraining(View):
+class DeleteTraining(LoginRequiredMixin, View):
     """
     Delets a specific training
     """
@@ -170,7 +179,7 @@ class DeleteTraining(View):
         return redirect("list_trainings")
 
 
-class AddTrainingWeekView(View):
+class AddTrainingWeekView(LoginRequiredMixin, View):
     """"
     Adds a Training Week
     """
@@ -187,7 +196,7 @@ class AddTrainingWeekView(View):
 
 
 
-class ShowTrainingWeeksView(View):
+class ShowTrainingWeeksView(LoginRequiredMixin, View):
     """
     Shows a list of all training weeeks
     """
@@ -202,7 +211,7 @@ class ShowTrainingWeeksView(View):
         return render(request, "list_training_weeks.html", {"object_list": TrainingWeek.objects.all(), "form_week": form_week})
 
 
-class ShowDetailTrainingWeekView(View):
+class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
     """
     Shows details of a specific Training Week. It is also possible to add Training Days to this week
     """
@@ -233,7 +242,7 @@ class ShowDetailTrainingWeekView(View):
         )
 
 
-class UpdateTrainingWeekView(View):
+class UpdateTrainingWeekView(LoginRequiredMixin, View):
     """
     Updates a specific Training Week
     """
@@ -251,7 +260,7 @@ class UpdateTrainingWeekView(View):
         return render(request, "form.html", {"form": form})
 
 
-class DeleteTrainingWeek(View):
+class DeleteTrainingWeek(LoginRequiredMixin, View):
     """
     Deletes a specific Training Week
     """
@@ -265,7 +274,7 @@ class DeleteTrainingWeek(View):
         return redirect("list_training_weeks")
 
 
-class ShowDetailTrainingDayView(View):
+class ShowDetailTrainingDayView(LoginRequiredMixin, View):
     """
     Shows details of a Training Day. Allows to ad comments by logged users
     """
@@ -301,7 +310,7 @@ class ShowDetailTrainingDayView(View):
                'training_day': training_day}
         return render(request, "training_day_detail.html", ctx)
 
-class DeleteTrainingDay(View):
+class DeleteTrainingDay(LoginRequiredMixin, View):
     """
     Deletes a Training Day
     """

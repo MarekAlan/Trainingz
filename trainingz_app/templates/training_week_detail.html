@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block trainingz %}
+    {% load static %}
+    <script src="{% static "js/training_week_detail.js" %}"></script>
     <p></p>
 
     <div style="border: solid; border-width: 1px;">
@@ -14,22 +16,24 @@
 
     <p>Trainings:</p>
     <div style="border: solid; border-width: 1px;">
-        {% for training in trainings %}
-            <div>{{ training.date }} Planned training: {{ training.training.activity }} - {{ training.training }}
+    {% for training in trainings %}
 
+        <div class="text" id="text">{{ training.date }} Planned training: {{ training.training.activity }}
+            - {{ training.training }}
 
-                <a href="{{ training.get_absolute_url }}">
-                    <button>Show Training</button>
-                </a>
-                <a href="{{ training.get_delete_url }}">
-                    <button>Delete</button>
-                </a>
+            <a href="{{ training.get_absolute_url }}">
+                <button>Show Training</button>
+            </a>
+            <a href="{{ training.get_delete_url }}">
+                <button>Delete</button>
+            </a>
+        <div>Check if completed: <input type="checkbox" id="checkbox"></div>
+        </div></div>
 
+        <div style="border: solid; border-width: 1px;">
 
-            </div>
-
-        {% endfor %}
-    </div>
+    {% endfor %}
+</div>
 
 
     <div>Add trainings:</div>
@@ -38,5 +42,6 @@
         {{ form_training.as_p }}
         <input type="submit" , value="Add Training">
     </form>
+
 
 {% endblock %}
