@@ -24,24 +24,6 @@ class Activity(models.Model):
     name = models.CharField(max_length=20, choices=CHOICES)
 
 
-DAYS = (
-    ("Mon", "Monday"),
-    ("Tue", "Tuesday"),
-    ("Wed", "Wednesday"),
-    ("Thu", "Thursday"),
-    ("Fri", "Friday"),
-    ("Sat", "Saturday"),
-    ("Sun", "Sunday"),
-)
-
-
-class DayName(models.Model):
-    name = models.CharField(max_length=3, choices=DAYS)
-    order = models.SmallIntegerField(unique=True)
-
-    def __str__(self):
-        return self.name
-
 
 WORKOUT_ELEMENTS = (
     ("Warm Up", "Warm Up"),
@@ -125,6 +107,6 @@ class TrainingWeek(models.Model):
 
 
 class Comment(models.Model):
-    training_day = models.ForeignKey(TrainingDay, on_delete=models.CASCADE, null=True)
+    training_day = models.ForeignKey(TrainingDay, on_delete=models.CASCADE)
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

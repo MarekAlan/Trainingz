@@ -3,7 +3,7 @@ import datetime
 import pytest
 from django.contrib.auth.models import User
 
-from trainingz_app.models import WorkoutBlock, Activity, Training, TrainingWeek
+from trainingz_app.models import WorkoutBlock, Activity, Training, TrainingWeek, TrainingDay
 
 
 @pytest.fixture
@@ -25,7 +25,7 @@ def activities():
     activities = []
     lists = ["Bike", "MTB", "Run"]
     for item in lists:
-        a = Activity.objects.create(name = item)
+        a = Activity.objects.create(name=item)
         activities.append(a)
     return activities
 
@@ -62,5 +62,9 @@ def training_weeks():
         )
         training_weeks.append(t)
     return training_weeks
+
+
+
+
 
 

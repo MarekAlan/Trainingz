@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.test import Client
 from django.urls import reverse
 
+from trainingz_app.models import Comment
+
 
 @pytest.mark.django_db
 def test_check_index():
@@ -45,6 +47,7 @@ def test_training_weeks_list(training_weeks, user):
     for training_week in training_weeks:
         assert training_week in response.context['object_list']
 
+
 @pytest.mark.django_db
 def test_register_user():
     url = reverse('register')
@@ -58,6 +61,7 @@ def test_register_user():
     assert response.status_code == 302
     User.objects.get(username='alan')
     assert client.login(username='alan', password='bb')
+
 
 @pytest.mark.django_db
 def test_check_workout_block_add_get_not_login():

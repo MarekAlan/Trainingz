@@ -276,7 +276,7 @@ class DeleteTrainingWeek(LoginRequiredMixin, View):
 
 class ShowDetailTrainingDayView(LoginRequiredMixin, View):
     """
-    Shows details of a Training Day. Allows to ad comments by logged users
+    Shows details of a Training Day. Allows to add comments by logged users
     """
     def get(self, request, id):
         training_day = TrainingDay.objects.get(pk=id)
@@ -309,6 +309,7 @@ class ShowDetailTrainingDayView(LoginRequiredMixin, View):
         ctx = {'comments': comments, "form": form, "training": training, "training_duration": training_duration,
                'training_day': training_day}
         return render(request, "training_day_detail.html", ctx)
+
 
 class DeleteTrainingDay(LoginRequiredMixin, View):
     """
