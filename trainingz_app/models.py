@@ -15,8 +15,6 @@ class Activity(models.Model):
         return self.name
 
 
-
-
 WORKOUT_ELEMENTS = (
     ("Warm Up", "Warm Up"),
     ("Active", "Active"),

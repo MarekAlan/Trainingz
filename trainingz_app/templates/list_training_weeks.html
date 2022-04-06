@@ -7,6 +7,7 @@
             <a href="{{ item.get_absolute_url }}">{{ item }}</a>
             <a href="{{ item.get_update_url }}"><button>Edit</button></a>
             <a href="{{ item.get_delete_url }}"><button>Delete</button></a>
+            {{ item.start_date }} - {{ item.end_date }}
         </li>
     {% endfor %}
  <form method="POST">
