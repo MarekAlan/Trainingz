@@ -9,39 +9,51 @@
     </div>
 
     <div style="border: solid; border-width: 1px;">
-          <p>Duration: {{ training_duration }} min</p>
+        <p>Duration: {{ training_duration }} min</p>
     </div>
 
     <div style="border: solid; border-width: 1px;">
-       <p>Workout Blocks:</p>
-<div style="border: solid; border-width: 1px;">
-        {% for workout_block in training.workout_blocks.all %}
-            <div>Workout Block: {{ workout_block.name }}  To do: {{ workout_block.workout_details }} </div>
+        <p>Workout Blocks:</p>
+        <div style="border: solid; border-width: 1px;">
+            {% for workout_block in training.workout_blocks.all %}
+                <div>Workout Block: {{ workout_block.name }} To do: {{ workout_block.workout_details }} </div>
 
-        {% endfor %}
+            {% endfor %}
 
-    <div style="border: solid; border-width: 1px;">
-        <p>Description: </p>
-        {{ training.description }}
-    </div>
+            <div style="border: solid; border-width: 1px;">
+                <p>Description: </p>
+                {{ training.description }}
+            </div>
 
-<div style="border: solid; border-width: 1px;">
-        <p>Comments: </p>
-     {% for comment in comments %}
+            <div style="border: solid; border-width: 1px;">
+                <p>Training Status: {{ training_day.completed }}</p>
 
-         <p>{{ comment.author }}</p>
-       <p> {{ comment.text }}</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <select name="Completed">
+                        <option value="Completed">Completed</option>
+                        <option value="To Do">To Do</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
 
-    {% endfor %}
+
+            <div style="border: solid; border-width: 1px;">
+                <p>Comments: </p>
+                {% for comment in comments %}
+                    <div style="border: solid; border-width: 1px;">
+                    <p>{{ comment.author }}</p>
+                    <p> {{ comment.text }}</p>
+                {% endfor %}
+                </div>
+            </div>
 
 
-    </div>
-
-
-<form method="POST">
-        {% csrf_token %}
-        {{ form.as_table }}
-        <input type="submit" value="Add Comment">
-</form>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_table }}
+                <input type="submit" name="add_comment" value="Add Comment">
+            </form>
 
 {% endblock %}

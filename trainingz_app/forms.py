@@ -1,7 +1,13 @@
 from django import forms
 from django.forms import CheckboxSelectMultiple, DateInput
 
-from trainingz_app.models import WorkoutBlock, Training, TrainingWeek, Comment, TrainingDay
+from trainingz_app.models import (
+    WorkoutBlock,
+    Training,
+    TrainingWeek,
+    Comment,
+    TrainingDay,
+)
 
 
 class AddWorkoutBlockForm(forms.ModelForm):
@@ -14,18 +20,14 @@ class AddTrainingForm(forms.ModelForm):
     class Meta:
         model = Training
         exclude = ["duration"]
-        widgets = {
-            'workout_blocks': CheckboxSelectMultiple
-        }
+        widgets = {"workout_blocks": CheckboxSelectMultiple}
 
 
 class AddWorkoutBlockToTrainingForm(forms.ModelForm):
     class Meta:
         model = Training
         fields = ["workout_blocks"]
-        widgets = {
-            'workout_blocks': CheckboxSelectMultiple
-        }
+        widgets = {"workout_blocks": CheckboxSelectMultiple}
 
 
 class AddTrainingWeekForm(forms.ModelForm):
@@ -33,24 +35,19 @@ class AddTrainingWeekForm(forms.ModelForm):
         model = TrainingWeek
         exclude = ["trainings"]
         widgets = {
-            'start_date': DateInput(attrs={'type': 'date'}),
-            'end_date': DateInput(attrs={'type': 'date'})
-
+            "start_date": DateInput(attrs={"type": "date"}),
+            "end_date": DateInput(attrs={"type": "date"}),
         }
 
 
 class AddTrainingDayForm(forms.ModelForm):
     class Meta:
         model = TrainingDay
-        fields = '__all__'
-        widgets = {
-            'date': DateInput(attrs={'type': 'date'})
-        }
+        exclude = ["completed"]
+        widgets = {"date": DateInput(attrs={"type": "date"})}
 
 
 class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['text']
-
-
+        fields = ["text"]

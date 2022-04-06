@@ -28,9 +28,7 @@ urlpatterns = [
         views.DeleteWorkoutBlockView.as_view(),
         name="delete_workout_block",
     ),
-    path(
-        "add_training/", views.AddTrainingView.as_view(), name="add_training"
-    ),
+    path("add_training/", views.AddTrainingView.as_view(), name="add_training"),
     path(
         "list_trainings/",
         views.ShowTrainingsView.as_view(),
@@ -77,14 +75,13 @@ urlpatterns = [
         name="delete_training_week",
     ),
     path(
-            "training_day/<int:id>/",
-            views.ShowDetailTrainingDayView.as_view(),
-            name="detail_training_day",
+        "training_day/<int:id>/",
+        views.ShowDetailTrainingDayView.as_view(),
+        name="detail_training_day",
     ),
     path(
-            "delete_training_day/<int:id>/",
-            views.DeleteTrainingDay.as_view(),
-            name="delete_training_day",
+        "delete_training_day/<int:id>/",
+        views.DeleteTrainingDay.as_view(),
+        name="delete_training_day",
     ),
-
 ]

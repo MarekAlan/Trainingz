@@ -24,7 +24,6 @@ class Activity(models.Model):
     name = models.CharField(max_length=20, choices=CHOICES)
 
 
-
 WORKOUT_ELEMENTS = (
     ("Warm Up", "Warm Up"),
     ("Active", "Active"),
@@ -70,9 +69,15 @@ class Training(models.Model):
         return reverse("delete_training", kwargs={"id": self.id})
 
 
+TO_DO_COMPLETED = (("To Do", "To Do"), ("Completed", "Completed"))
+
+
 class TrainingDay(models.Model):
     training = models.ForeignKey(Training, on_delete=models.CASCADE)
     date = models.DateField()
+    completed = models.CharField(
+        max_length=15, choices=TO_DO_COMPLETED, default="To Do"
+    )
 
     def __str__(self):
         return str(self.date)
@@ -85,6 +90,7 @@ class TrainingDay(models.Model):
 
     def get_delete_url(self):
         return reverse("delete_training_day", kwargs={"id": self.id})
+
 
 class TrainingWeek(models.Model):
     name = models.CharField(max_length=40)
