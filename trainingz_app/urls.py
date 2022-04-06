@@ -4,6 +4,11 @@ from trainingz_app import views
 
 urlpatterns = [
     path(
+        "list_activities/",
+        views.ShowActivitiesView.as_view(),
+        name="list_activities",
+    ),
+    path(
         "add_workout_block/",
         views.AddWorkoutBlockView.as_view(),
         name="add_workout_block",

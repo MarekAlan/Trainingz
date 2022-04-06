@@ -9,14 +9,14 @@ from trainingz_app.forms import (
     AddTrainingWeekForm,
     AddCommentForm,
     AddWorkoutBlockToTrainingForm,
-    AddTrainingDayForm,
+    AddTrainingDayForm, AddActivityForm,
 )
 from trainingz_app.models import (
     WorkoutBlock,
     Training,
     TrainingWeek,
     TrainingDay,
-    Comment,
+    Comment, Activity,
 )
 
 
@@ -27,6 +27,25 @@ class IndexView(View):
 
     def get(self, request):
         return render(request, "base.html")
+
+class ShowActivitiesView(LoginRequiredMixin, View):
+    """
+    Add an activity and shows a list of them
+    """
+
+    def get(self, request):
+        form = AddActivityForm()
+        return render(
+            request,
+            "list_activites.html",
+            {"object_list": Activity.objects.all(), "form": form},
+        )
+
+    def post(self, request):
+        form = AddActivityForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect("list_activities")
 
 
 class AddWorkoutBlockView(LoginRequiredMixin, View):

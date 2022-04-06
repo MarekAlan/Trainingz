@@ -4,7 +4,7 @@
 <ul>
     {% for item in object_list %}
         <li>
-            <a href="{{ item.get_absolute_url }}">{{ item }}</a>
+            <a href="{{ item.get_absolute_url }}">{{ item.activity }}: {{ item }}</a>
             <a href="{{ item.get_update_url }}"><button>Edit</button></a>
             <a href="{{ item.get_delete_url }}"><button>Delete</button></a>
         </li>

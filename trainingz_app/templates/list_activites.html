@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block trainingz %}
+
+<ul>
+    {% for item in object_list %}
+        <li>
+            {{ item.name }}
+        </li>
+    {% endfor %}
+ <form method="POST">
+        {% csrf_token %}
+     <p>Add Activity:</p>
+        {{ form.as_p }}
+        <input type="submit" value="Add Activity">
+</ul>
+{% endblock %}

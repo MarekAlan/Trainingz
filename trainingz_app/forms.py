@@ -6,9 +6,13 @@ from trainingz_app.models import (
     Training,
     TrainingWeek,
     Comment,
-    TrainingDay,
+    TrainingDay, Activity,
 )
 
+class AddActivityForm(forms.ModelForm):
+    class Meta:
+        model = Activity
+        fields = '__all__'
 
 class AddWorkoutBlockForm(forms.ModelForm):
     class Meta:

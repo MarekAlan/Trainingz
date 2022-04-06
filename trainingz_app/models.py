@@ -6,22 +6,15 @@ from django.db import models
 # Create your models here.
 from django.urls import reverse
 
-CHOICES = (
-    ("Bike", "Road Bike"),
-    ("MTB", "MTB"),
-    ("Run", "Running"),
-    ("Stretching", "Stretching"),
-    ("Crosstrain", "Cross-Training"),
-    ("Rest Day", "Rest Day"),
-    ("Event", "Event"),
-)
 
 
 class Activity(models.Model):
+    name = models.CharField(max_length=40)
+
     def __str__(self):
         return self.name
 
-    name = models.CharField(max_length=20, choices=CHOICES)
+
 
 
 WORKOUT_ELEMENTS = (
