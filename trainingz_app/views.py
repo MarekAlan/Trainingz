@@ -278,6 +278,7 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
     def get(self, request, id):
         training_week = TrainingWeek.objects.get(pk=id)
         trainings = training_week.trainings.all().order_by("date")
+        dates = TrainingDay.objects.dates('date', 'day')
         form_training = AddTrainingDayForm()
         return render(
             request,
@@ -286,6 +287,7 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
                 "training_week": training_week,
                 "trainings": trainings,
                 "form_training": form_training,
+                "dates": dates,
             },
         )
 

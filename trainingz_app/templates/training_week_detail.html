@@ -13,29 +13,38 @@
 
 
     <p>Trainings:</p>
-    <div style="border: solid; border-width: 1px;">
-        {% for training in trainings %}
 
-            <div class="text" id="text">{{ training.date }} Planned training: {{ training.training.activity }}
-                - {{ training.training }}
+    <table>
+        <div style="border: solid; border-width: 1px;">
+        {% for date in dates %}
+            <tr>
+                <div style="border: solid; border-width: 1px;">
+                    <div class="text" id="text">{{ date }}
+                </tr>
+            {% for training in trainings %}
+                {% if date == training.date %}
+                    <tr>
+                        <div class="text" id="text">Planned training: {{ training.training.activity }}
+                            - {{ training.training }}
 
-                <a href="{{ training.get_absolute_url }}">
-                    <button>Show Training</button>
-                </a>
-                <a href="{{ training.get_delete_url }}">
-                    <button>Delete</button>
-                </a>
-
-            Training Status: {{ training.completed }}
+                            <a href="{{ training.get_absolute_url }}">
+                                <button>Show Training</button>
+                            </a>
+                            <a href="{{ training.get_delete_url }}">
+                                <button>Delete</button>
+                            </a>
+                        Training Status: {{ training.completed }}
+                    </tr>
+                {% endif %}
                 </div>
 
-            <div style="border: solid; border-width: 1px;">
-
-        {% endfor %}
+  {% endfor %}
+            {% endfor %}
         </div>
+    </table>
 
-
-    <div>Add trainings:</div>
+<div style="border: solid; border-width: 1px;">
+    <div style="border: solid; border-width: 1px;">Add trainings:</div>
     <form method="POST">
         {% csrf_token %}
         {{ form_training.as_p }}

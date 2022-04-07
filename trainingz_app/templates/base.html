@@ -12,7 +12,7 @@
 <body>
 <p>Welcome {{ user }} have a great workout today.</p>
 </body>
-</html>
+
 
 <div class="topnav">
     <a href="{% url 'index' %}">Home</a>
@@ -34,8 +34,8 @@
 </div>
 {% block trainingz %}
 
-
 {% endblock %}
 
 <p> <img src="{% static 'cycling.jpeg' %}"> </p>
 <p>{{ date }}</p>
+</html>
