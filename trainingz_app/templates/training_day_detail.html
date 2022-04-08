@@ -1,9 +1,28 @@
 {% extends 'base.html' %}
 {% block trainingz %}
-    <p></p>
+    <p></p><script>
+       document.addEventListener("DOMContentLoaded", function () {
+                if (document.getElementById('completed').innerText === "Completed") {
+                    document.getElementById('main').style.color = "green";
+                    document.getElementById('text').style.color = "green";
+                }
+            });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const a = new Date(Date.now())
+        const b = new Date(document.getElementById("date").innerText)
+        console.log(a)
+        console.log(b)
+        if (document.getElementById('completed').innerText === "To Do" && a > b) {
+            document.getElementById('main').style.color = "red";
+            document.getElementById('text').style.color = "red";
+        }
+    });
+    </script>
 
-    <div style="border: solid; border-width: 1px;">
-        <h3>{{ training_day.date }}</h3>
+    <div style="border: solid; border-width: 1px;" id="main">
+        <h3><label id="date">{{ training_day.date }}</label></h3>
         <h3>{{ training_day.training }}</h3>
         <h3>{{ training_day.training.activity }}</h3>
     </div>
@@ -25,8 +44,8 @@
                 {{ training.description }}
             </div>
 
-            <div style="border: solid; border-width: 1px;">
-                <p>Training Status: {{ training_day.completed }}</p>
+            <div style="border: solid; border-width: 1px;" id="text">
+                <p>Training Status: <label id="completed">{{ training_day.completed }}</label></p>
 
                 <form method="POST">
                     {% csrf_token %}
