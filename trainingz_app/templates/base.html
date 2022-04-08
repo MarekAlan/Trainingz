@@ -2,10 +2,10 @@
 {% load static %}
 <html lang="en">
 <head>
- <meta charset="UTF-8">
-     <meta name="viewport"
-           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trainingz</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 </head>
@@ -24,11 +24,11 @@
         <a href="{% url 'logout' %}">Logout</a>
         {% if user.is_authenticated and user.is_superuser %}
             <a href="{% url 'users_list' %}">Users List</a>
-            {% endif %}
+        {% endif %}
     {% else %}
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>
-   {% endif %}
+    {% endif %}
 
 
 </div>
@@ -36,6 +36,6 @@
 
 {% endblock %}
 
-<p> <img src="{% static 'cycling.jpeg' %}"> </p>
+<p><img src="{% static 'cycling.jpeg' %}"></p>
 <p>{{ date }}</p>
 </html>

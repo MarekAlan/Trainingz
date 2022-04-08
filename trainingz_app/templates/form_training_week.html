@@ -1,9 +1,9 @@
-{%  extends 'base.html' %}
+{% extends 'base.html' %}
 {% block trainingz %}
     <form method="POST">
         {% csrf_token %}
-        {{  form_week.as_p }}
-        {{  form_training.as_p }}
-    <input type="submit">
+        {{ form_week.as_p }}
+        {{ form_training.as_p }}
+        <input type="submit">
     </form>
-{%  endblock %}
+{% endblock %}

@@ -1,5 +1,31 @@
 {% extends 'base.html' %}
 {% block trainingz %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('#completed').forEach(function (item) {
+                if (item.innerText === "Completed") {
+                    item.parentElement.style.color = "green";
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.querySelectorAll('#completed').forEach(function (item) {
+                const a = new Date(Date.now())
+                const c = item.parentElement.previousElementSibling.innerText
+                const b = new Date(item.parentElement.previousElementSibling.innerText)
+                console.log(a)
+                console.log(b)
+                console.log(c)
+                if (item.innerText === "To Do" && a > b) {
+                    item.parentElement.style.color = "red";
+                }
+            });
+        });
+    </script>
+
     <p></p>
 
     <div style="border: solid; border-width: 1px;">
@@ -16,15 +42,16 @@
 
     <table>
         <div style="border: solid; border-width: 1px;">
-        {% for date in dates %}
-            <tr>
-                <div style="border: solid; border-width: 1px;">
-                    <div class="text" id="text">{{ date }}
+            {% for date in dates %}
+                <tr>
+                    <div class="text" id="text" style="border: solid; border-width: 1px;">
+                        {{ date }}</div>
+
                 </tr>
-            {% for training in trainings %}
-                {% if date == training.date %}
-                    <tr>
-                        <div class="text" id="text">Planned training: {{ training.training.activity }}
+                {% for training in trainings %}
+                    {% if date == training.date %}
+                        <div class="text" id="text_1">
+                            Planned training: {{ training.training.activity }}
                             - {{ training.training }}
 
                             <a href="{{ training.get_absolute_url }}">
@@ -33,17 +60,20 @@
                             <a href="{{ training.get_delete_url }}">
                                 <button>Delete</button>
                             </a>
-                        Training Status: {{ training.completed }}
-                    </tr>
-                {% endif %}
-                </div>
 
-  {% endfor %}
+                            Training Status: <label id="completed">{{ training.completed }}</label>
+                        </div>
+
+
+                    {% endif %}
+                    </div>
+
+                {% endfor %}
+
             {% endfor %}
-        </div>
+
     </table>
 
-<div style="border: solid; border-width: 1px;">
     <div style="border: solid; border-width: 1px;">Add trainings:</div>
     <form method="POST">
         {% csrf_token %}

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import forms
 from django.shortcuts import render, redirect
@@ -279,6 +281,7 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
         training_week = TrainingWeek.objects.get(pk=id)
         trainings = training_week.trainings.all().order_by("date")
         dates = TrainingDay.objects.dates('date', 'day')
+        date_now = datetime.now()
         form_training = AddTrainingDayForm()
         return render(
             request,
@@ -288,6 +291,7 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
                 "trainings": trainings,
                 "form_training": form_training,
                 "dates": dates,
+                "date_now": date_now,
             },
         )
 

@@ -17,29 +17,29 @@
 
     <div style="border: solid; border-width: 1px;"
 
-        <p>Workout Blocks:</p>
-<div style="border: solid; border-width: 1px;">
+    <p>Workout Blocks:</p>
+    <div style="border: solid; border-width: 1px;">
         {% for workout_block in training.workout_blocks.all %}
-            <div>Workout Block: {{ workout_block.name }}  To do: {{ workout_block.workout_details }} </div>
+            <div>Workout Block: {{ workout_block.name }} To do: {{ workout_block.workout_details }} </div>
 
         {% endfor %}
 
-    <div style="border: solid; border-width: 1px;">
-        <p>Description: </p>
-        {{ training.description }}
-    </div>
-    <p></p>
-    <a href="{{ training.get_update_url }}">
-        <button>Edit</button>
-    </a>
-    <a href="{{ training.get_delete_url }}">
-        <button>Delete</button>
-    </a>
+        <div style="border: solid; border-width: 1px;">
+            <p>Description: </p>
+            {{ training.description }}
+        </div>
+        <p></p>
+        <a href="{{ training.get_update_url }}">
+            <button>Edit</button>
+        </a>
+        <a href="{{ training.get_delete_url }}">
+            <button>Delete</button>
+        </a>
 
-    </p>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Add Block">
-    </form>
+        </p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add Block">
+        </form>
 {% endblock %}
