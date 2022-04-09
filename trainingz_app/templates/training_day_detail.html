@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
 {% block trainingz %}
-    <p></p><script>
-       document.addEventListener("DOMContentLoaded", function () {
-                if (document.getElementById('completed').innerText === "Completed") {
-                    document.getElementById('main').style.color = "green";
-                    document.getElementById('text').style.color = "green";
-                }
-            });
+    <p></p>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById('completed').innerText === "Completed") {
+                document.getElementById('main').style.color = "green";
+                document.getElementById('text').style.color = "green";
+            }
+        });
     </script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const a = new Date(Date.now())
-        const b = new Date(document.getElementById("date").innerText)
-        console.log(a)
-        console.log(b)
-        if (document.getElementById('completed').innerText === "To Do" && a > b) {
-            document.getElementById('main').style.color = "red";
-            document.getElementById('text').style.color = "red";
-        }
-    });
+        document.addEventListener("DOMContentLoaded", function () {
+            const a = new Date(Date.now())
+            const b = new Date(document.getElementById("date").innerText)
+            console.log(a)
+            console.log(b)
+            if (document.getElementById('completed').innerText === "To Do" && a > b) {
+                document.getElementById('main').style.color = "red";
+                document.getElementById('text').style.color = "red";
+            }
+        });
     </script>
 
     <div style="border: 1px solid; padding-left:5px" id="main">
@@ -34,45 +35,47 @@
     <div style="border: 1px solid;">
         <p style="padding-left:5px">Training:</p>
     </div>
+    <div style="border: 1px solid;">
+        {% for workout_block in training.workout_blocks.all %}
+            <ul>{{ workout_block.name }}
+                <p>To do: {{ workout_block.workout_details }}</p>
+            </ul>
+        {% endfor %}
+
         <div style="border: 1px solid;">
-            {% for workout_block in training.workout_blocks.all %}
-                <ul>{{ workout_block.name }}
-                    <p>To do: {{ workout_block.workout_details }}</p>
-                </ul>
-            {% endfor %}
+            <p style="padding-left:5px">Description: </p>
+            <p style="padding-left:5px">{{ training.description }}</p>
+        </div>
 
-            <div style="border: 1px solid;">
-                <p style="padding-left:5px">Description: </p>
-                <p style="padding-left:5px">{{ training.description }}</p>
-            </div>
-
-            <div style="border: 1px solid;" id="text">
-                <p>Training Status: <label id="completed">{{ training_day.completed }}</label></p>
-
-                <form method="POST">
-                    {% csrf_token %}
-                    <select name="Completed">
-                        <option value="Completed">Completed</option>
-                        <option value="To Do">To Do</option>
-                    </select>
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-            <p></p><p></p><div></div>
-
-            <div style="padding-left:5px">Comments: </div>
-            {% for comment in comments %}
-                <div style="border: 1px solid;">
-                <p style="padding-left:5px">{{ comment.author }}</p>
-                <p style="padding-left:5px"> {{ comment.text }}</p>
-            {% endfor %}
-            </div>
-
+        <div style="border: 1px solid;" id="text">
+            <p>Training Status: <label id="completed">{{ training_day.completed }}</label></p>
 
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_table }}
-                <input type="submit" name="add_comment" value="Add Comment">
+                <select name="Completed">
+                    <option value="Completed">Completed</option>
+                    <option value="To Do">To Do</option>
+                </select>
+                <input type="submit" value="Submit">
             </form>
+        </div>
+        <p></p>
+        <p></p>
+        <div></div>
+
+        <div style="padding-left:5px">Comments:</div>
+        {% for comment in comments %}
+            <div style="border: 1px solid;">
+            <p style="padding-left:5px">{{ comment.author }}</p>
+            <p style="padding-left:5px"> {{ comment.text }}</p>
+        {% endfor %}
+        </div>
+
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input type="submit" name="add_comment" value="Add Comment">
+        </form>
 
 {% endblock %}

@@ -69,3 +69,15 @@ def training_weeks():
         )
         training_weeks.append(t)
     return training_weeks
+
+
+@pytest.fixture
+def training_days(trainings):
+    training_days = []
+    for training in trainings:
+        t = TrainingDay.objects.create(
+            training=training,
+            date=datetime.date.today()
+        )
+        training_days.append(t)
+    return training_days

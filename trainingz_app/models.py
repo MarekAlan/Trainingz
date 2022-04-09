@@ -85,8 +85,8 @@ class TrainingDay(models.Model):
 
 class TrainingWeek(models.Model):
     name = models.CharField(max_length=40)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(default=datetime.date.today())
+    end_date = models.DateField(default=datetime.date.today())
     trainings = models.ManyToManyField(TrainingDay)
     description = models.TextField()
 

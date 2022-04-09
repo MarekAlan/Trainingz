@@ -281,7 +281,6 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
         training_week = TrainingWeek.objects.get(pk=id)
         trainings = training_week.trainings.all().order_by("date")
         dates = TrainingDay.objects.dates('date', 'day')
-        date_now = datetime.now()
         form_training = AddTrainingDayForm()
         return render(
             request,
@@ -291,13 +290,13 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
                 "trainings": trainings,
                 "form_training": form_training,
                 "dates": dates,
-                "date_now": date_now,
             },
         )
 
     def post(self, request, id):
         training_week = TrainingWeek.objects.get(pk=id)
         trainings = training_week.trainings.all()
+        dates = TrainingDay.objects.dates('date', 'day')
         form_training = AddTrainingDayForm(request.POST)
         if form_training.is_valid():
             training = form_training.cleaned_data["training"]
@@ -312,6 +311,7 @@ class ShowDetailTrainingWeekView(LoginRequiredMixin, View):
                 "training_week": training_week,
                 "trainings": trainings,
                 "form_training": form_training,
+                "dates": dates,
             },
         )
 
@@ -418,3 +418,20 @@ class DeleteTrainingDay(LoginRequiredMixin, View):
         training_day = TrainingDay.objects.get(pk=id)
         training_day.delete()
         return redirect("list_training_weeks")
+
+
+class AddCommentView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = AddCommentForm()
+        return render(request, 'form.html', {'form': form})
+
+    def post(self, request):
+        training_day = TrainingDay.objects.get(pk=1)
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.training_day = training_day
+            comment.save()
+        return render(request, "form.html", {'form': form})
+
