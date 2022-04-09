@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.test import Client
 from django.urls import reverse
 
-from trainingz_app.models import Comment, Activity, WorkoutBlock, Training, TrainingDay, TrainingWeek
+from trainingz_app.models import Comment, Activity, WorkoutBlock, Training, TrainingWeek
 
 
 @pytest.mark.django_db
@@ -50,6 +50,28 @@ def test_training_weeks_list(training_weeks, user):
     assert response.context["object_list"].count() == len(training_weeks)
     for training_week in training_weeks:
         assert training_week in response.context["object_list"]
+
+
+@pytest.mark.django_db
+def test_activities_list(activities, user):
+    client = Client()
+    client.force_login(user)
+    url = reverse('list_activities')
+    response = client.get(url)
+    assert response.context['object_list'].count() == len(activities)
+    for activity in activities:
+        assert activity in response.context['object_list']
+
+
+@pytest.mark.django_db
+def test_trainings_list(trainings, user):
+    client = Client()
+    client.force_login(user)
+    url = reverse('list_trainings')
+    response = client.get(url)
+    assert response.context['object_list'].count() == len(trainings)
+    for training in trainings:
+        assert training in response.context['object_list']
 
 
 @pytest.mark.django_db
@@ -104,13 +126,48 @@ def test_check_trainings(user):
     response = client.get(url)
     assert response.status_code == 200
 
+
+@pytest.mark.django_db
+def test_check_training_weeks_not_login():
+    client = Client()
+    url = reverse("list_training_weeks")
+    response = client.get(url)
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_check_training_weeks(user):
+    url = reverse("list_training_weeks")
+    client = Client()
+    client.force_login(user)
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_check_activities_not_login():
+    client = Client()
+    url = reverse("list_activities")
+    response = client.get(url)
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_check_activites(user):
+    url = reverse("list_activities")
+    client = Client()
+    client.force_login(user)
+    response = client.get(url)
+    assert response.status_code == 200
+
+
 @pytest.mark.django_db
 def test_user_list(users):
     client = Client()
     url = reverse('users_list')
     response = client.get(url)
     assert response.status_code == 200
-    assert response.context['object_list'].count() == len(users)  # class UserListView(ListView) zwraca object_list
+    assert response.context['object_list'].count() == len(users)
     for user in users:
         assert user in response.context['object_list']
 
