@@ -21,30 +21,32 @@
     });
     </script>
 
-    <div style="border: solid; border-width: 1px;" id="main">
-        <h3><label id="date">{{ training_day.date }}</label></h3>
-        <h3>{{ training_day.training }}</h3>
-        <h3>{{ training_day.training.activity }}</h3>
+    <div style="border: 1px solid; padding-left:5px" id="main">
+        <p id="date">{{ training_day.date }}</p>
+        <p>{{ training_day.training }} - {{ training_day.training.activity }}</p>
     </div>
 
-    <div style="border: solid; border-width: 1px;">
-        <p>Duration: {{ training_duration }} min</p>
+    <div style="border: 1px solid;">
+
+        <p style="padding-left:5px">Duration: {{ training_duration }} min</p>
     </div>
 
-    <div style="border: solid; border-width: 1px;">
-        <p>Workout Blocks:</p>
-        <div style="border: solid; border-width: 1px;">
+    <div style="border: 1px solid;">
+        <p style="padding-left:5px">Training:</p>
+    </div>
+        <div style="border: 1px solid;">
             {% for workout_block in training.workout_blocks.all %}
-                <div>Workout Block: {{ workout_block.name }} To do: {{ workout_block.workout_details }} </div>
-
+                <ul>{{ workout_block.name }}
+                    <p>To do: {{ workout_block.workout_details }}</p>
+                </ul>
             {% endfor %}
 
-            <div style="border: solid; border-width: 1px;">
-                <p>Description: </p>
-                {{ training.description }}
+            <div style="border: 1px solid;">
+                <p style="padding-left:5px">Description: </p>
+                <p style="padding-left:5px">{{ training.description }}</p>
             </div>
 
-            <div style="border: solid; border-width: 1px;" id="text">
+            <div style="border: 1px solid;" id="text">
                 <p>Training Status: <label id="completed">{{ training_day.completed }}</label></p>
 
                 <form method="POST">
@@ -56,16 +58,14 @@
                     <input type="submit" value="Submit">
                 </form>
             </div>
+            <p></p><p></p><div></div>
 
-
-            <div style="border: solid; border-width: 1px;">
-                <p>Comments: </p>
-                {% for comment in comments %}
-                    <div style="border: solid; border-width: 1px;">
-                    <p>{{ comment.author }}</p>
-                    <p> {{ comment.text }}</p>
-                {% endfor %}
-                </div>
+            <div style="padding-left:5px">Comments: </div>
+            {% for comment in comments %}
+                <div style="border: 1px solid;">
+                <p style="padding-left:5px">{{ comment.author }}</p>
+                <p style="padding-left:5px"> {{ comment.text }}</p>
+            {% endfor %}
             </div>
 
 

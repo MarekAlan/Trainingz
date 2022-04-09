@@ -30,27 +30,27 @@
 
     <div style="border: solid; border-width: 1px;">
 
-        <h4>{{ training_week.name }}</h4> {{ training_week.start_date }} - {{ training_week.end_date }}
+        <h4 style="padding-left:5px">{{ training_week.name }} - {{ training_week.start_date }} - {{ training_week.end_date }}</h4>
     </div>
-    <div style="border: solid; border-width: 1px;">
+    <div style="padding-left:5px; border: solid; border-width: 1px;">
 
         <h4>{{ training_week.description }}</h4>
     </div>
 
 
-    <p>Trainings:</p>
+    <p style="padding-left:5px">Trainings:</p>
 
     <table>
-        <div style="border: solid; border-width: 1px;">
+        <div style="solid; border-width: 1px;">
             {% for date in dates %}
                 <tr>
-                    <div class="text" id="text" style="border: solid; border-width: 1px;">
+                    <div class="text" id="text" style="padding-bottom:10px; padding-left:5px; border: solid; border-width: 1px;">
                         {{ date }}</div>
 
                 </tr>
                 {% for training in trainings %}
                     {% if date == training.date %}
-                        <div class="text" id="text_1">
+                        <div class="text" id="text_1" style="padding-bottom:10px; padding-left:15px" >
                             Planned training: {{ training.training.activity }}
                             - {{ training.training }}
 
@@ -74,8 +74,8 @@
 
     </table>
 
-    <div style="border: solid; border-width: 1px;">Add trainings:</div>
-    <form method="POST">
+    <div style="border: solid; border-width: 1px; padding-left:5px">Add trainings:</div>
+    <form method="POST" style="padding-left:5px">
         {% csrf_token %}
         {{ form_training.as_p }}
         <input type="submit" , value="Add Training">

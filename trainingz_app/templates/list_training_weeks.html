@@ -3,7 +3,7 @@
 
     <ul>
         {% for item in object_list %}
-            <li>
+            <li style="padding-block:5px">
                 <a href="{{ item.get_absolute_url }}">{{ item }}</a>
                 <a href="{{ item.get_update_url }}">
                     <button>Edit</button>
