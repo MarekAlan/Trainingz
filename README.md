@@ -1,3 +1,3 @@
 # Trainingz
 
-My final project made during the CodersLab Bootcamp - Python Developer.
+My final project made during the Python Developer Bootcamp - at Coders Lab.
